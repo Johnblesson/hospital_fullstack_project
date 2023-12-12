@@ -2,17 +2,21 @@ import User from '../models/users.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import canAccessData from '../privilege/accessRights.js';
+import checkValidation from '../middleware/validation.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const add = async (req, res) => {
-  const { firstName, lastName, role, username, email, password } = req.body;
+// Use the checkValidation middleware
+checkValidation(req, res);
 
-  const salt = await bcrypt.genSalt(10);
-  const hashPassword = await bcrypt.hash(password, salt);
+const { firstName, lastName, role, username, email, password } = req.body;
 
-  const user = await User.findOne({ email });
+const salt = await bcrypt.genSalt(10);
+const hashPassword = await bcrypt.hash(password, salt);
+
+const user = await User.findOne({ email });
   if (user) {
     return res.status(409).json({ error: 'Email exists' });
   }
@@ -47,27 +51,36 @@ const add = async (req, res) => {
   }
 };
 
+// const getAll = async (req, res) => {
+//   try {
+//     const allUsers = await User.find({}, { password: 0 });
+//     if (allUsers) {
+//       res.json({
+//         confirm: 'Success',
+//         data: canAccessData(req.user.user, allUsers),
+//       });
+//       return;
+//     }
+//     res.json({
+//       confirm: 'Unable to get Users',
+//       data: [],
+//     });
+//   } catch (err) {
+//     res.json({
+//       confirm: 'Failed: cannot fetch users',
+//       data: err,
+//     });
+//   }
+// };
+
 const getAll = async (req, res) => {
   try {
-    const allUsers = await User.find({}, { password: 0 });
-    if (allUsers) {
-      res.json({
-        confirm: 'Success',
-        data: canAccessData(req.user.user, allUsers),
-      });
-      return;
-    }
-    res.json({
-      confirm: 'Unable to get Users',
-      data: [],
-    });
+    const allUsers = await User.find();
+    res.status(200).json(allUsers)
   } catch (err) {
-    res.json({
-      confirm: 'Failed: cannot fetch users',
-      data: err,
-    });
+    res.status(500).json({ message: err.message });
   }
-};
+}
 
 const getById = async (req, res) => {
   const { id } = req.params;
