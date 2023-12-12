@@ -1,0 +1,40 @@
+{
+	"name": "backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"type": "module",
+	"scripts": {
+		"dev": "nodemon app.js",
+		"start": "node app.js",
+		"test": "cross-env PORT=8001 ./node_modules/.bin/mocha test"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^5.1.0",
+		"bcryptjs": "^2.4.3",
+		"chai": "^4.3.7",
+		"chai-http": "^4.3.0",
+		"cors": "^2.8.5",
+		"dayjs": "^1.11.8",
+		"dotenv": "^16.0.3",
+		"express": "^4.18.2",
+		"gravatar": "^1.8.2",
+		"jsonwebtoken": "^9.0.0",
+		"mocha": "^10.2.0",
+		"moment": "^2.29.4",
+		"morgan": "^1.10.0",
+		"nodemon": "^2.0.22",
+		"pg": "^8.11.0",
+		"pg-hstore": "^2.3.4",
+		"sequelize": "^6.31.1",
+		"serve-static": "^1.15.0",
+		"swagger-jsdoc": "^6.2.8",
+		"swagger-ui-express": "^4.6.3"
+	},
+	"devDependencies": {
+		"sequelize-cli": "^6.6.0"
+	}
+}

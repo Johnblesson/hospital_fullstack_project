@@ -1,0 +1,6 @@
+.env
+node_modules/
+config/
+test.js
+bin/
+migration/
