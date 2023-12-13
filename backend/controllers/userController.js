@@ -1,12 +1,12 @@
 import User from '../models/users.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import canAccessData from '../privilege/accessRights.js';
+import { canAccessData } from '../privilege/accessRights.js';
 import checkValidation from '../middleware/validation.js';
 import dotenv from 'dotenv';
-
 dotenv.config();
 
+// Define add Function
 const add = async (req, res) => {
 // Use the checkValidation middleware
 checkValidation(req, res);
@@ -51,28 +51,7 @@ const user = await User.findOne({ email });
   }
 };
 
-// const getAll = async (req, res) => {
-//   try {
-//     const allUsers = await User.find({}, { password: 0 });
-//     if (allUsers) {
-//       res.json({
-//         confirm: 'Success',
-//         data: canAccessData(req.user.user, allUsers),
-//       });
-//       return;
-//     }
-//     res.json({
-//       confirm: 'Unable to get Users',
-//       data: [],
-//     });
-//   } catch (err) {
-//     res.json({
-//       confirm: 'Failed: cannot fetch users',
-//       data: err,
-//     });
-//   }
-// };
-
+// Define getAll Function
 const getAll = async (req, res) => {
   try {
     const allUsers = await User.find();
@@ -82,6 +61,7 @@ const getAll = async (req, res) => {
   }
 }
 
+// Define getById Function
 const getById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -105,6 +85,7 @@ const getById = async (req, res) => {
   }
 };
 
+// Define deleteOne Function
 const deleteOne = async (req, res) => {
   const { id } = req.params;
   try {
@@ -121,6 +102,7 @@ const deleteOne = async (req, res) => {
   }
 };
 
+// Define update Function
 const update = async (req, res) => {
   const { id } = req.params;
   try {
@@ -137,4 +119,5 @@ const update = async (req, res) => {
   }
 };
 
+// export all functions
 export default { add, getAll, getById, deleteOne, update };

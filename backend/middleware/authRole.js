@@ -1,14 +1,25 @@
-const authRole = (role) => (req, res, next) => {
-	if (req.user.user.role !== role) {
-	  return res.status(401).json({ msg: 'Not Allowed' });
-	}
-	next();
-  };
+// const authRole = (role) => (req, res, next) => {
+// 	if (req.user.user.role !== role) {
+// 	  return res.status(401).json({ msg: 'Not Allowed' });
+// 	}
+// 	next();
+//   };
   
-  const ROLE = {
-	ADMIN: 'ADMIN',
-	USER: 'USER',
-  };
+// const ROLE = {
+// 	ADMIN: 'ADMIN',
+// 	USER: 'USER',
+//   };
   
-  export default { authRole, ROLE };
-  
+// export default { authRole, ROLE };
+
+export const authRole = (role) => (req, res, next) => {
+    if (req.user.user.role !== role) {
+      return res.status(401).json({ msg: 'Not Allowed' });
+    }
+    next();
+};
+
+export const ROLE = {
+    ADMIN: 'ADMIN',
+    USER: 'USER',
+};

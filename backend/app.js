@@ -1,18 +1,18 @@
 import express from "express";
 // import path from "path";
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import logger from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
 import serveStatic from 'serve-static';
-// import swaggerUi from "swagger-ui-express";
-// import swaggerDocument from "./utils/swagger.json";
+import swaggerUi from "swagger-ui-express";
 import connectDB from "./database/connection.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import ebl2012Routes from "./routes/ebl2012.js";
-import { error } from "console";
+// import { error } from "console";
 
 // Config 
 const app = express();
@@ -20,6 +20,10 @@ dotenv.config();
 connectDB();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+// Swagger
+const swaggerContent = fs.readFileSync('./utils/swagger.json', 'utf-8');
+const swagger = JSON.parse(swaggerContent);
 
 // Middlewares
 app.use(cors());
@@ -33,7 +37,15 @@ app.use(serveStatic('public'));
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/ebl2012", ebl2012Routes);
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Swagger
+const swaggerUiOptions = {
+	swaggerOptions: {
+	  defaultModelsExpandDepth: -1,
+	},
+  };
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger, swaggerUiOptions));
 
 app.get("/api", (req, res) => {
 	res.json({ message: "Welcome to KHRC Backend API" });

@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"type": "module",
 	"scripts": {
-		"dev": "nodemon app.js",
+		"dev": "nodemon --experimental-modules app.js",
 		"start": "node app.js",
 		"test": "cross-env PORT=8001 ./node_modules/.bin/mocha test"
 	},
