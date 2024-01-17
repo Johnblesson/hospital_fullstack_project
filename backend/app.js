@@ -11,7 +11,7 @@ import swaggerUi from "swagger-ui-express";
 import connectDB from "./database/connection.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
-import ebl2012Routes from "./routes/ebl2012.js";
+import css from "./routes/css.js";
 // import { error } from "console";
 
 // Config 
@@ -36,7 +36,9 @@ app.use(serveStatic('public'));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/ebl2012", ebl2012Routes);
+app.use("/api", css);
+// app.use("/api/ls1", css);
+// app.use("/api/ls2", css);
 
 // Swagger
 const swaggerUiOptions = {

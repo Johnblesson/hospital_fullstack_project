@@ -43,7 +43,7 @@ const user = await User.findOne({ email });
       expiresIn: '1d',
     });
 
-    return res.status(200).json({ success: 'User Added Successfully', accessToken: token });
+    return res.status(201).json({ success: 'User Added Successfully', accessToken: token });
   } catch (error) {
     return res.status(500).json({
       error: 'Failed to create user',
